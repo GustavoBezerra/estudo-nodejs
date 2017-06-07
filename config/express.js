@@ -1,8 +1,14 @@
-var app = require('express')();
-app.set('view engine', 'ejs');
-app.set('views','./app/views');
+var express = require('express');
+var load = require('express-load');
 
 module.exports = function() {
-    console.log("modulo ta sendo carregado");
+    var app = express();
+
+    app.set('view engine', 'ejs');
+    app.set('views','./app/views');
+
+    load('infra', {cwd: 'app'})
+        .then('routes')
+        .into(app);
     return app;
 }
